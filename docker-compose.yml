@@ -1,0 +1,52 @@
+version: "3"
+services:
+  api-gateway:
+    build:
+      context: "."
+      dockerfile: "./api-gateway/Dockerfile"
+    depends_on:
+      - issue-handler
+      - users
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./api-gateway:/opt/app
+
+  issue-handler:
+    build:
+      context: "."
+      dockerfile: "./services/issue-handler/Dockerfile"
+    depends_on:
+      - issue-handler-db
+    ports:
+      - "7100:7100"
+    volumes:
+      - ./services/issue-handler:/opt/app
+
+  issue-handler-db:
+    environment:
+      - MONGO_ROOT_PASSWORD=password
+      - MONGO_DATABASE=db
+    image: mongo:latest
+    ports:
+     - "7200:27017"
+
+  users:
+    build:
+      context: "."
+      dockerfile: "./services/users/Dockerfile"
+    depends_on:
+      - users-db
+    ports:
+      - "7101:7101"
+    volumes:
+      - ./services/users:/opt/app
+
+  users-db:
+    environment:
+      - MONGO_ROOT_PASSWORD=password
+      - MONGO_DATABASE=db
+    image: mongo:latest
+    ports:
+     - "7201:27017"
+      
