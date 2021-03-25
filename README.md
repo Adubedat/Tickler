@@ -1,2 +1,2 @@
-# issue-handler
-Simple issue handler with a microservices architecture
+# tickets-handler
+Simple tickets handler with a microservices architecture

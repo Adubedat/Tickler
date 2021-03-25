@@ -4,4 +4,4 @@ WORKDIR /opt/app
 
 RUN npm install
 
-CMD npm run watch
+CMD npm run start:dev

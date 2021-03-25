@@ -12,7 +12,7 @@ export class UserExistsGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const user = context.switchToHttp().getRequest().body;
-    if (await this.usersService.findOne(user.username)) {
+    if (await this.usersService.findOneByUsername(user.username)) {
       throw new ConflictException('Username already exists');
     }
     return true;

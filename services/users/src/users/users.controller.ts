@@ -18,11 +18,17 @@ export class UsersController {
   @UseGuards(UserExistsGuard)
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.addUser(createUserDto);
+    const user = await this.usersService.addUser(createUserDto);
+    const result = {
+      id: user._id,
+      username: user.username,
+      role: user.role,
+    };
+    console.log(result);
+    return result;
   }
 
-  // TO REMOVE
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     return await this.usersService.findAll();
@@ -30,7 +36,13 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getProfile(@Request() req) {
-    return req.user;
+  async getProfile(@Request() req) {
+    const user = await this.usersService.findOneById(req.user.id);
+    const result = {
+      id: user._id,
+      username: user.username,
+      role: user.role,
+    };
+    return result;
   }
 }
