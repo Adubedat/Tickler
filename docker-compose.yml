@@ -1,5 +1,18 @@
 version: "3"
 services:
+
+  webapp:
+    build:
+      context: "."
+      dockerfile: "./webapp/Dockerfile"
+    depends_on:
+      - users
+      - tickets-handler
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./webapp:/opt/app
+
   users:
     build:
       context: "."
