@@ -2,6 +2,9 @@ FROM node:14
 
 WORKDIR /opt/app
 
-RUN npm install
+ARG environment
+ENV ENVIRONMENT ${environment}
 
-CMD npm run start:dev
+RUN npm install --production
+
+CMD bash ./scripts/run.sh
