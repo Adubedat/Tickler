@@ -1,15 +1,20 @@
 import styled from "styled-components";
 
+export const ButtonStyle = {
+  width: '100%',
+  background: 'none #008aa8aa',
+  color: '#ffffff'
+}
+
 export const H1Title = styled.p`
-  font-size: 4em;
-  font-family: Arial;
-  color: #484848;
+  text-align: center;
+  font-size: 2em;
+  color: #ffffff;
 `;
 
 export const H2Title = styled.p`
-  font-size: 2em;
-  font-family: Arial;
-  color: #303030;
+  font-size: 1.5em;
+  color: #ffffff;
 `;
 
 export const MainContainer = styled.div`
@@ -20,7 +25,19 @@ export const MainContainer = styled.div`
   flex-direction:column;
 `;
 
+export const AuthContainer = styled.div`
+  flex-basis: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const LogoContainer = styled.div`
+  width: 250px;
+`;
+
 export const FormContainer = styled.div`
+  width: 100%;
   position: relative;
   background-color: rgb(246, 248, 250);
   display: flex;

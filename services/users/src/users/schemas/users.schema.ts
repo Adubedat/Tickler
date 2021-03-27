@@ -10,12 +10,12 @@ const SALT_ROUNDS = 10;
 export class User extends Document {
   _id: MongooseSchema.Types.ObjectId;
 
-  @Prop({ required: [true, 'can not be empty'] })
+  @Prop({ required: [true, 'Username can not be empty'] })
   username: string;
 
   @Prop({
-    required: [true, 'can not be empty'],
-    minlength: [8, 'should include at least 8 chars'],
+    required: [true, 'Password can not be empty'],
+    minlength: [8, 'Password should include at least 8 chars'],
   })
   password: string;
 

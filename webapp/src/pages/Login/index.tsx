@@ -4,8 +4,9 @@ import { ReactComponent as ReactLogo } from '../../logo.svg';
 import { InputGroup, Button, Intent, FormGroup } from '@blueprintjs/core';
 import { Tooltip2 } from '@blueprintjs/popover2';
 import { useUserDispatch } from '../../context/User';
-import { loginUser } from '../../context/User';
+import { updateUser } from '../../context/User';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { USERS_SERVICE_URL, ROOT_URL } from '../../constants';
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
@@ -13,10 +14,10 @@ import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
 
 
 const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
-  const [username, setUsername] = useState<string>('');// eslint-disable-line
-  const [password, setPassword] = useState<string>('');// eslint-disable-line
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [helperText, setHelperText] = useState<boolean>(false);//eslint-disable-line
+  const [error, setError] = useState<boolean>(false);
 
   const dispatch = useUserDispatch();
 
@@ -31,20 +32,39 @@ const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
     </Tooltip2>
   );
 
+  const DisplayError = () => {
+    if (error) {
+      return (<p style={{textAlign: 'center', color: '#c23030'}}>Invalid username or password</p>);
+    }
+    return null;
+  }
+
   const handleLogin = async (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const payload = { username, password };
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    };
 
     try {
-      let response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
+      const response = await fetch(`${USERS_SERVICE_URL}/auth`, requestOptions);
+      const json = await response.json();
       console.log(response);
-      if (!response.access_token) return
-      history.push('/dashboard') //navigate to dashboard on success
+      if (response.status >= 400) {
+        setError(true);
+        return;
+      }
+      updateUser(dispatch, json.data);
+      setError(false);
+      history.push('/dashboard');
     } catch (error) {
-      console.log(error)
+      setError(true);
+      console.log(error);
+    }
   }
-  }
-    
+  
   return (
     <MainContainer>
       <AuthContainer>
@@ -55,18 +75,19 @@ const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
         <H2Title>Debugging has never been so fun</H2Title>
         <FormContainer>
           <form>
+            <H1Title style={{color: '#182026'}}>Login</H1Title>
+            <DisplayError />
             <FormGroup
               label="Username"
               labelFor="username-input"
-              helperText={helperText && "Helper text with details..."}
-              intent={helperText? Intent.DANGER: Intent.NONE}
+              intent={error? Intent.DANGER: Intent.NONE}
               labelInfo={"(required)"}
             >
               <InputGroup
                 id="username-input"
                 large={true}
                 placeholder="Enter your username..."
-                intent={helperText? Intent.DANGER: Intent.NONE}
+                intent={error? Intent.DANGER: Intent.NONE}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -74,8 +95,7 @@ const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
             <FormGroup
               label="Password"
               labelFor="password-input"
-              helperText={helperText && "Helper text with details..."}
-              intent={helperText? Intent.DANGER: Intent.NONE}
+              intent={error? Intent.DANGER: Intent.NONE}
               labelInfo={"(required)"}
             >
               <InputGroup
@@ -84,7 +104,7 @@ const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
                 placeholder="Enter your password..."
                 rightElement={lockButton}
                 type={showPassword ? "text" : "password"}
-                intent={helperText? Intent.DANGER: Intent.NONE}
+                intent={error? Intent.DANGER: Intent.NONE}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -96,11 +116,11 @@ const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
             >
               Login
             </Button>
-            <p>
+            <p style={{textAlign: 'center'}}>
              <br />
               Not registered yet ?&nbsp;
-              <a href="http://localhost:3000">
-                Create your free account here
+              <a href={`${ROOT_URL}/register`}>
+                Register here
               </a>
             </p>
           </form>

@@ -7,6 +7,7 @@ export const ButtonStyle = {
 }
 
 export const H1Title = styled.p`
+  text-align: center;
   font-size: 2em;
   color: #ffffff;
 `;
