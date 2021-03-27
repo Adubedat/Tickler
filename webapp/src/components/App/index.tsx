@@ -7,11 +7,11 @@ import {
 } from 'react-router-dom';
 import routes from '../../config/routes';
 import { BackgroundContainer } from './styles';
-import { AuthProvider } from '../../context/Auth';
+import { UserProvider } from '../../context/User';
  
 function App() {
   return (
-    <AuthProvider>
+    <UserProvider>
       <BackgroundContainer>
         <Router>
           <Switch>
@@ -26,7 +26,7 @@ function App() {
           </Switch>
         </Router>
       </BackgroundContainer>
-    </AuthProvider>
+    </UserProvider>
   );
 }
  

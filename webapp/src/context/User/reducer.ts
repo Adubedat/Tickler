@@ -19,7 +19,7 @@ export const initialState = {
   isLoading: false,
 };
 
-export const AuthReducer = (initialState: IinitialState, action: any) => {
+export const UserReducer = (initialState: IinitialState, action: any) => {
   switch (action.type) {
     case "REQUEST_LOGIN":
       return {

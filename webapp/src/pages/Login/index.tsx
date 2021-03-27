@@ -3,8 +3,8 @@ import { H1Title, H2Title, MainContainer, FormContainer, AuthContainer, LogoCont
 import { ReactComponent as ReactLogo } from '../../logo.svg';
 import { InputGroup, Button, Intent, FormGroup } from '@blueprintjs/core';
 import { Tooltip2 } from '@blueprintjs/popover2';
-import { useAuthDispatch } from '../../context/Auth';
-import { loginUser } from '../../context/Auth';
+import { useUserDispatch } from '../../context/User';
+import { loginUser } from '../../context/User';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import '@blueprintjs/core/lib/css/blueprint.css';
@@ -18,7 +18,7 @@ const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [helperText, setHelperText] = useState<boolean>(false);//eslint-disable-line
 
-  const dispatch = useAuthDispatch();
+  const dispatch = useUserDispatch();
 
   const lockButton = (
     <Tooltip2 content={`${showPassword ? "Hide" : "Show"} Password`}>
