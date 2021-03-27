@@ -5,32 +5,29 @@ interface IupdateUserData {
 }
 
 export const updateUser = (dispatch: React.Dispatch<any>, data: IupdateUserData) => {
-  dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+  dispatch({ type: 'AUTH_SUCCESS', payload: data });
   localStorage.setItem('jwt', data.access_token);
 }
 
-
-// export async function loginUser(dispatch: React.Dispatch<any>, loginPayload: IloginPayload) {
+// export const checkUserAuth = async (dispatch: React.Dispatch<any>) => {
+//   const jwt = localStorage.getItem('jwt');
 //   const requestOptions = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(loginPayload),
+//     method: 'GET',
+//     headers: {
+//       'Authorization': 'Bearer ' + jwt,
+//       'Content-Type': 'application/json'
+//     },
 //   };
- 
+  
 //   try {
-//     dispatch({ type: 'REQUEST_LOGIN' });
-//     let response = await fetch(`${USERS_SERVICE_URL}/auth`, requestOptions);
+//     let response = await fetch(`${USERS_SERVICE_URL}/users/me`, requestOptions);
 //     let data = await response.json();
- 
-//     if (data.access_token) {
-//       dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-//       localStorage.setItem('jwt', data.access_token);
-//       return data
+//     if (response.status === 401) {
+//       dispatch({ type: 'AUTH_ERROR' });
+//     } else {
+//       dispatch({ type: 'AUTH_SUCCESS', payload: data.data });
 //     }
- 
-//     dispatch({ type: 'AUTH_ERROR', error: data.errors[0] });
-//     return;
 //   } catch (error) {
-//     dispatch({ type: 'AUTH_ERROR', error: error });
+//     dispatch({ type: 'AUTH_ERROR' });
 //   }
 // }

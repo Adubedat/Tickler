@@ -1,10 +1,3 @@
-//  let user = localStorage.getItem("currentUser")
-//   ? JSON.parse(localStorage.getItem("currentUser") || '{}').user
-//   : "";
-// let token = localStorage.getItem("currentUser")
-//   ? JSON.parse(localStorage.getItem("currentUser") || '{}').auth_token
-//   : "";
- 
 export interface IinitialState {
   username: String;
   role: String;
@@ -19,7 +12,7 @@ export const initialState = {
 
 export const UserReducer = (initialState: IinitialState, action: any) => {
   switch (action.type) {
-    case "LOGIN_SUCCESS":
+    case "AUTH_SUCCESS":
       return {
         ...initialState,
         username: action.payload.username,
@@ -30,6 +23,8 @@ export const UserReducer = (initialState: IinitialState, action: any) => {
     case "AUTH_ERROR":
       return {
         ...initialState,
+        username: "",
+        role: "",
         isAuth: false,
       };
  

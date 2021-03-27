@@ -1,32 +1,33 @@
- 
-import React from 'react';
+ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect
 } from 'react-router-dom';
 import routes from '../../config/routes';
 import { BackgroundContainer } from './styles';
-import { UserProvider } from '../../context/User';
+import { useUserState } from '../../context/User';
  
-function App() {
+const App = () => {
+  const user = useUserState();
+  
   return (
-    <UserProvider>
       <BackgroundContainer>
         <Router>
           <Switch>
-            {routes.map((route) => (
-              <Route
-                key={route.path}
-                exact path={route.path}
-              >
-                <route.component />
-              </Route>
-              ))}
+            {routes.map((route) => {
+              if (user.isAuth) {
+                return <Redirect key={route.path} to={{ pathname: "/dashboard" }} />;
+              }
+              if(!user.isAuth && route.isPrivate) {
+                return <Redirect key={route.path} to={{ pathname: "/" }} />;
+              }
+              return <Route key={route.path} exact path={route.path} component={route.component}/>;
+            })}
           </Switch>
         </Router>
       </BackgroundContainer>
-    </UserProvider>
   );
 }
  
