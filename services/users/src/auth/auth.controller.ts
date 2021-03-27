@@ -1,4 +1,11 @@
-import { Controller, Request, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Post,
+  UseGuards,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -10,7 +17,12 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post()
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    const result = {
+      status: HttpStatus.OK,
+      message: 'User authenticated',
+      data: await this.authService.login(req.user),
+    };
+    return result;
   }
 
   @MessagePattern({ role: 'auth', cmd: 'check' })
@@ -20,8 +32,7 @@ export class AuthController {
 
       return res;
     } catch (e) {
-      console.log(e);
-      return false;
+      throw new UnauthorizedException();
     }
   }
 }
