@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Inject } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Inject,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { timeout } from 'rxjs/operators';
 
@@ -22,8 +27,7 @@ export class AuthGuard implements CanActivate {
 
       return res;
     } catch (err) {
-      console.error(err);
-      return false;
+      throw new UnauthorizedException();
     }
   }
 }
