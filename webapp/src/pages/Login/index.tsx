@@ -5,13 +5,14 @@ import { InputGroup, Button, Intent, FormGroup } from '@blueprintjs/core';
 import { Tooltip2 } from '@blueprintjs/popover2';
 import { useAuthDispatch } from '../../context/Auth';
 import { loginUser } from '../../context/Auth';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
 
 
-const Login = () => {
+const Login: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
   const [username, setUsername] = useState<string>('');// eslint-disable-line
   const [password, setPassword] = useState<string>('');// eslint-disable-line
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -37,8 +38,8 @@ const Login = () => {
     try {
       let response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
       console.log(response);
-      if (!response.user) return
-      // history.push('/dashboard') //navigate to dashboard on success
+      if (!response.access_token) return
+      history.push('/dashboard') //navigate to dashboard on success
     } catch (error) {
       console.log(error)
   }
@@ -108,4 +109,4 @@ const Login = () => {
     </MainContainer>
   );
 };
-export default Login;
+export default withRouter(Login);

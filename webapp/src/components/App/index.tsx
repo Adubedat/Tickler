@@ -10,7 +10,6 @@ import { BackgroundContainer } from './styles';
 import { AuthProvider } from '../../context/Auth';
  
 function App() {
-  console.log(routes);
   return (
     <AuthProvider>
       <BackgroundContainer>

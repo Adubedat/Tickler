@@ -17,11 +17,9 @@ export async function loginUser(dispatch: React.Dispatch<any>, loginPayload: Ilo
     let response = await fetch(`${USERS_SERVICE_URL}/auth`, requestOptions);
     let data = await response.json();
  
-    console.log("COUCOUOOOOO")
-    console.log(data);
-    if (data.user) {
+    if (data.access_token) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem('currentUser', JSON.stringify(data));
+      localStorage.setItem('jwt', data.access_token);
       return data
     }
  
