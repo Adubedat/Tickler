@@ -11,6 +11,7 @@ export const initialState = {
 };
 
 export const UserReducer = (initialState: IinitialState, action: any) => {
+  console.log('bouh')
   switch (action.type) {
     case "AUTH_SUCCESS":
       return {

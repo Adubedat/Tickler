@@ -9,6 +9,11 @@ export const updateUser = (dispatch: React.Dispatch<any>, data: IupdateUserData)
   localStorage.setItem('jwt', data.access_token);
 }
 
+export const disconnectUser = (dispatch: React.Dispatch<any>) => {
+  dispatch({ type: 'AUTH_ERROR' });
+  localStorage.removeItem('jwt');
+}
+
 // export const checkUserAuth = async (dispatch: React.Dispatch<any>) => {
 //   const jwt = localStorage.getItem('jwt');
 //   const requestOptions = {

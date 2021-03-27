@@ -13,7 +13,7 @@ import Dashboard from '../../pages/Dashboard';
 const App = () => {
   const user = useUserState();
   const jwt = localStorage.getItem('jwt');
-  const isAuth = user.isAuth || (jwt !== undefined);
+  const isAuth = user.isAuth || (jwt !== null);
   
   return (
       <BackgroundContainer>

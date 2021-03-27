@@ -16,17 +16,17 @@ const LeftMenu: React.FunctionComponent<Props> = ({ propsSelected }) => {
 
   return (
     <LeftMenuContainer >
-    <MenuElement id="tickets" selected={selected} onClick={handleClick}>
-      <Icon icon={IconNames.BOOKMARK} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}} />
-      <span style={{ fontSize: '1.2em', display: 'flex', alignItems: 'center'}}>Tickets</span>
-      <Icon icon={IconNames.CHEVRON_RIGHT} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}}/>
-    </MenuElement>
-    <MenuElement id="statistics" selected={selected} onClick={handleClick}>
-      <Icon icon={IconNames.CHART} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}} />
-      <span style={{ fontSize: '1.2em', display: 'flex', alignItems: 'center'}}>Statistics</span>
-      <Icon icon={IconNames.CHEVRON_RIGHT} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}}/>
-    </MenuElement>
-  </LeftMenuContainer>
+      <MenuElement id="tickets" selected={selected} onClick={handleClick}>
+        <Icon icon={IconNames.BOOKMARK} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}} />
+        <span style={{ fontSize: '1.1em', display: 'flex', alignItems: 'center'}}>Tickets</span>
+        <Icon icon={IconNames.CHEVRON_RIGHT} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}}/>
+      </MenuElement>
+      <MenuElement id="statistics" selected={selected} onClick={handleClick}>
+        <Icon icon={IconNames.CHART} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}} />
+        <span style={{ fontSize: '1.1em', display: 'flex', alignItems: 'center'}}>Statistics</span>
+        <Icon icon={IconNames.CHEVRON_RIGHT} iconSize={Icon.SIZE_LARGE} intent={Intent.NONE} style={{display: 'flex', alignItems: 'center'}}/>
+      </MenuElement>
+    </LeftMenuContainer>
   );
 };
 

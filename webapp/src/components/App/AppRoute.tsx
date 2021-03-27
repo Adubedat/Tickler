@@ -13,5 +13,5 @@ export const PublicRoute = ({ isAuth, ...props }: Props) => {
 export const ProtectedRoute =  ({ isAuth, ...props }: Props) => {
     return isAuth
         ? (<Route {...props} />)
-        : (<Redirect to="/login" />)
+        : (<Redirect to="/" />)
 };

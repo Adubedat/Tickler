@@ -1,8 +1,9 @@
 import React from 'react';
-import { MainContainer, TicketsContainer, RowContainer, ColumnContainer } from './styles';
+import { MainContainer, RowContainer, ColumnContainer } from './styles';
 import { withRouter } from 'react-router-dom'
 import Navbar from '../../components/Navbar';
 import LeftMenu from '../../components/LeftMenu/index';
+import TicketsList from '../../components/Tickets';
 
 const Dashboard = () => {
   return (
@@ -11,7 +12,7 @@ const Dashboard = () => {
         <Navbar />
         <RowContainer>
           <LeftMenu />
-          <TicketsContainer />
+          <TicketsList />
         </RowContainer>
       </ColumnContainer>
     </MainContainer>
