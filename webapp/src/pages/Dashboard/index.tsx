@@ -1,12 +1,21 @@
 import React from 'react';
-import { MainContainer } from './styles';
+import { MainContainer, TicketsContainer, RowContainer, ColumnContainer } from './styles';
+import { withRouter } from 'react-router-dom'
+import Navbar from '../../components/Navbar';
+import LeftMenu from '../../components/LeftMenu/index';
 
 const Dashboard = () => {
   return (
     <MainContainer>
-      <p>Dashboard</p>
+      <ColumnContainer>
+        <Navbar />
+        <RowContainer>
+          <LeftMenu />
+          <TicketsContainer />
+        </RowContainer>
+      </ColumnContainer>
     </MainContainer>
   );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);
