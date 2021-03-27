@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from '../Login';
-import SignUp from '../Register';
+ 
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom';
+import routes from '../../config/routes';
 import { BackgroundContainer } from './styles';
-
+import { AuthProvider } from '../../context/Auth';
+ 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // eslint-disable-line
-
-  // fire.auth().onAuthStateChanged((user) => (user ? setIsLoggedIn(true) : setIsLoggedIn(false)));
-
-  // const signOut = () => {
-  //   fire.auth().signOut();
-  // };
-  console.log('logged in?', isLoggedIn);
+  console.log(routes);
   return (
-    <BackgroundContainer>
-      <Router>
-        <Switch>
-          <Route path="/">
-            <Login />
-          </Route>
-          <Route path="/join">
-            <SignUp />
-          </Route>
-        </Switch>
-      </Router>
-    </BackgroundContainer>
+    <AuthProvider>
+      <BackgroundContainer>
+        <Router>
+          <Switch>
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                exact path={route.path}
+              >
+                <route.component />
+              </Route>
+              ))}
+          </Switch>
+        </Router>
+      </BackgroundContainer>
+    </AuthProvider>
   );
 }
+ 
 export default App;

@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { H1Title, H2Title, MainContainer, FormContainer, AuthContainer, LogoContainer, ButtonStyle } from './styles';
-import {ReactComponent as ReactLogo} from '../../logo.svg';
+import { ReactComponent as ReactLogo } from '../../logo.svg';
 import { InputGroup, Button, Intent, FormGroup } from '@blueprintjs/core';
 import { Tooltip2 } from '@blueprintjs/popover2';
+import { useAuthDispatch } from '../../context/Auth';
+import { loginUser } from '../../context/Auth';
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
 
+
 const Login = () => {
-  const [email, setEmail] = useState<string>('');// eslint-disable-line
+  const [username, setUsername] = useState<string>('');// eslint-disable-line
   const [password, setPassword] = useState<string>('');// eslint-disable-line
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [helperText, setHelperText] = useState<boolean>(false);//eslint-disable-line
+
+  const dispatch = useAuthDispatch();
 
   const lockButton = (
     <Tooltip2 content={`${showPassword ? "Hide" : "Show"} Password`}>
@@ -25,6 +30,20 @@ const Login = () => {
     </Tooltip2>
   );
 
+  const handleLogin = async (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    const payload = { username, password };
+
+    try {
+      let response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
+      console.log(response);
+      if (!response.user) return
+      // history.push('/dashboard') //navigate to dashboard on success
+    } catch (error) {
+      console.log(error)
+  }
+  }
+    
   return (
     <MainContainer>
       <AuthContainer>
@@ -47,6 +66,8 @@ const Login = () => {
                 large={true}
                 placeholder="Enter your username..."
                 intent={helperText? Intent.DANGER: Intent.NONE}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </FormGroup>
             <FormGroup
@@ -63,9 +84,15 @@ const Login = () => {
                 rightElement={lockButton}
                 type={showPassword ? "text" : "password"}
                 intent={helperText? Intent.DANGER: Intent.NONE}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FormGroup>
-            <Button type="submit" style={ButtonStyle}>
+            <Button
+              onClick={handleLogin}
+              type="submit"
+              style={ButtonStyle}
+            >
               Login
             </Button>
             <p>
