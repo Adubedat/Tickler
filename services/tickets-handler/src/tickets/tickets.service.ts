@@ -21,7 +21,7 @@ export class TicketsService {
   }
 
   async findAll() {
-    return await this.ticketModel.find();
+    return await this.ticketModel.find().sort({ modified: -1 });
   }
 
   async findOne(id: string) {

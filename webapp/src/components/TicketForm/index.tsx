@@ -1,19 +1,30 @@
-import { Button, HTMLSelect, InputGroup, Intent, Label, TextArea } from '@blueprintjs/core';
+import { Button, FormGroup, HTMLSelect, InputGroup, Intent, Label, TextArea } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { useUserState } from '../../context/User';
 import { ButtonsContainer, FormContainer, MainContainer, TicketTitle, RowContainer, ColumnContainer, LabelStyle, SuccessButtonStyle } from './styles';
 
 interface Props {
   toggleOverlay: () => void;
+  createTicket: (data: ICreateTicket) => void;
   type: string;
 }
 
-const TicketForm = ({toggleOverlay, type}: Props) => {
+export interface ICreateTicket {
+  creator_id: String;
+  title: string;
+  description: string;
+  priority: string;
+  severity: string;
+  status: string;
+}
+
+const TicketForm = ({toggleOverlay, createTicket, type}: Props) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('');
-  const [priority, setPriority] = useState('');
-  const [severity, setSeverity] = useState('');
+  const [status, setStatus] = useState('Open');
+  const [priority, setPriority] = useState('Normal');
+  const [severity, setSeverity] = useState('Normal');
+  const [subjectEmpty, setSubjectEmpty] = useState(false);
 
 
   const user = useUserState();
@@ -29,7 +40,7 @@ const TicketForm = ({toggleOverlay, type}: Props) => {
     { label: "Closed", value: "Closed"},
   ];
 
-  const priorityOptions = [
+  const severityOptions = [
     { label: "Wishlist", value: "Wishlist"},
     { label: "Minor", value: "Minor"},
     { label: "Normal", value: "Normal"},
@@ -37,11 +48,30 @@ const TicketForm = ({toggleOverlay, type}: Props) => {
     { label: "Critical", value: "Critical"},
   ]
 
-  const severityOptions = [
+  const priorityOptions = [
     { label: "Low", value: "Low"},
     { label: "Normal", value: "Normal"},
     { label: "High", value: "High"},
   ]
+
+  const handleConfirmForm = async () => {
+    if (!title) {
+      setSubjectEmpty(true);
+      return;
+    }
+    const data = {
+      creator_id: user.id,
+      title,
+      description,
+      status,
+      priority,
+      severity
+    }
+    console.log(data);
+    if (type === "create") {
+      createTicket(data);
+    }
+  }
 
   return (
     <MainContainer>
@@ -49,15 +79,19 @@ const TicketForm = ({toggleOverlay, type}: Props) => {
         <TicketTitle>New ticket</TicketTitle>
         <RowContainer style={{ flex: 5 }}>
           <ColumnContainer style={{ flex: 3 }}>
-            <InputGroup
-              id="title-input"
-              large
-              placeholder="Subject"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            <FormGroup
+              intent={Intent.DANGER}
+              helperText={subjectEmpty ? "Subject can not be empty" : ""}
+            >
+              <InputGroup
+                large
+                placeholder="Subject"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                intent={subjectEmpty ? Intent.DANGER : Intent.NONE}
+              />
+            </FormGroup>
             <TextArea
-              id="description-input"
               large
               placeholder="Please add descriptive text to help others better understand this issue"
               value={description}
@@ -82,7 +116,7 @@ const TicketForm = ({toggleOverlay, type}: Props) => {
           </ColumnContainer>
         </RowContainer>
         <ButtonsContainer style={{ flex: 1 }}>
-          <Button style={SuccessButtonStyle} intent={Intent.SUCCESS} large text={type}/>
+          <Button onClick={handleConfirmForm} style={SuccessButtonStyle} intent={Intent.SUCCESS} large text={type}/>
           <Button style={{width: '200px'}} intent={Intent.DANGER} large onClick={toggleOverlay} text="Cancel"/>
           {displayDeleteButton()}
         </ButtonsContainer>

@@ -9,7 +9,6 @@ import {
   PreconditionFailedException,
 } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { resourceLimits } from 'worker_threads';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './dto/user.dto';
 import { UserExistsGuard } from './guards/user-exists.guard';

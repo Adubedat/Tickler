@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  PreconditionFailedException,
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -19,12 +20,16 @@ export class TicketsController {
 
   @Post()
   async create(@Body() createTicketDto: CreateTicketDto) {
-    const ticket = await this.ticketsService.create(createTicketDto);
-    return {
-      status: 201,
-      message: 'Ticket created',
-      data: ticket,
-    };
+    try {
+      const ticket = await this.ticketsService.create(createTicketDto);
+      return {
+        status: 201,
+        message: 'Ticket created',
+        data: ticket,
+      };
+    } catch (error) {
+      throw new PreconditionFailedException(error.message);
+    }
   }
 
   @Get()
@@ -47,6 +52,7 @@ export class TicketsController {
     };
   }
 
+  @UseGuards(isAdminOrCreatorGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,

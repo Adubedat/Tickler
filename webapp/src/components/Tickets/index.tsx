@@ -4,6 +4,7 @@ import { TICKETS_SERVICE_URL } from '../../constants';
 import { Button, Overlay, Tag } from "@blueprintjs/core";
 import { Tooltip2 } from "@blueprintjs/popover2";
 import TicketForm from '../TicketForm';
+import { ICreateTicket } from '../TicketForm';
 
 interface TicketProps {
   _id: string;
@@ -106,6 +107,28 @@ const TicketsList = () => {
   fetchUsers();
   })
 
+  const createTicket = async (ticket: ICreateTicket) => {
+    const jwt = localStorage.getItem('jwt');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(ticket)
+    }
+    try {
+      let response = await fetch(`${TICKETS_SERVICE_URL}/tickets`, requestOptions);
+      let data = await response.json();
+      if (response.status >= 400) {
+        console.error(data.message);
+      }
+      toggleOverlay();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const displayTickets = () => {
     return (tickets.map((ticket) => {
       ticket.modified = ticket.modified.split('T')[0].replace('-', ' ');
@@ -124,7 +147,7 @@ const TicketsList = () => {
         onClose={toggleOverlay}
         backdropProps={backdropStyle}
       >
-        <TicketForm toggleOverlay={toggleOverlay} type={'create'} />
+        <TicketForm toggleOverlay={toggleOverlay} type={'create'} createTicket={createTicket} />
       </Overlay>
       <RowContainer >
         <TicketTitle>Tickets</TicketTitle>
