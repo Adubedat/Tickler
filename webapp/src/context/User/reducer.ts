@@ -13,7 +13,6 @@ export const initialState = {
 };
 
 export const UserReducer = (initialState: IinitialState, action: any) => {
-  console.log('bouh')
   switch (action.type) {
     case "AUTH_SUCCESS":
       return {
@@ -24,7 +23,7 @@ export const UserReducer = (initialState: IinitialState, action: any) => {
         isAuth: true,
       };
  
-    case "AUTH_ERROR":
+    case "LOGOUT":
       return {
         ...initialState,
         id: "",
