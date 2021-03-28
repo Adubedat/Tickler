@@ -40,3 +40,8 @@ export const ListElementHeader = styled.div`
   align-items: center;
   flex-direction: row;
 `;
+
+export const TicketAttribute = styled.span`
+  min-width: 120px;
+  text-align: center;
+`;
