@@ -2,14 +2,19 @@ import { Button, FormGroup, HTMLSelect, InputGroup, Intent, Label, TextArea } fr
 import React, { useState } from 'react';
 import { useUserState } from '../../context/User';
 import { ButtonsContainer, FormContainer, MainContainer, TicketTitle, RowContainer, ColumnContainer, LabelStyle, SuccessButtonStyle } from './styles';
+import { TicketProps } from '../Tickets';
+import { TICKETS_SERVICE_URL } from '../../constants';
 
 interface Props {
   toggleOverlay: () => void;
   createTicket: (data: ICreateTicket) => void;
+  updateTicket: (data: ICreateTicket) => void;
+  ticket: TicketProps;
   type: string;
 }
 
 export interface ICreateTicket {
+  id?: string;
   creator_id: String;
   title: string;
   description: string;
@@ -18,20 +23,41 @@ export interface ICreateTicket {
   status: string;
 }
 
-const TicketForm = ({toggleOverlay, createTicket, type}: Props) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('Open');
-  const [priority, setPriority] = useState('Normal');
-  const [severity, setSeverity] = useState('Normal');
+const TicketForm = ({toggleOverlay, createTicket, updateTicket, ticket, type}: Props) => {
+  const [title, setTitle] = useState(ticket.title);
+  const [description, setDescription] = useState(ticket.description);
+  const [status, setStatus] = useState(ticket.status);
+  const [priority, setPriority] = useState(ticket.priority);
+  const [severity, setSeverity] = useState(ticket.severity);
   const [subjectEmpty, setSubjectEmpty] = useState(false);
 
 
   const user = useUserState();
 
+  const deleteTicket = async () => {
+    const jwt = localStorage.getItem('jwt');
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json'
+      },
+    }
+    try {
+      let response = await fetch(`${TICKETS_SERVICE_URL}/tickets/${ticket._id}`, requestOptions);
+      let data = await response.json();
+      if (response.status >= 400) {
+        console.error(data.message);
+      }
+      toggleOverlay();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const displayDeleteButton = () => {
     if (user.role === "admin") {
-      return (<Button style={{width: '200px'}} intent={Intent.DANGER} large onClick={toggleOverlay} text="Delete ticket"/>)
+      return (<Button style={{width: '200px'}} intent={Intent.DANGER} large onClick={deleteTicket} text="Delete ticket"/>)
     }
   }
 
@@ -59,7 +85,9 @@ const TicketForm = ({toggleOverlay, createTicket, type}: Props) => {
       setSubjectEmpty(true);
       return;
     }
+
     const data = {
+      id: ticket._id,
       creator_id: user.id,
       title,
       description,
@@ -67,16 +95,18 @@ const TicketForm = ({toggleOverlay, createTicket, type}: Props) => {
       priority,
       severity
     }
-    console.log(data);
-    if (type === "create") {
+
+    if (type === "Create") {
       createTicket(data);
+    } else {
+      updateTicket(data);
     }
   }
 
   return (
     <MainContainer>
       <FormContainer>
-        <TicketTitle>New ticket</TicketTitle>
+        <TicketTitle>{type === "Create" ? 'New ticket' : 'Update ticket'}</TicketTitle>
         <RowContainer style={{ flex: 5 }}>
           <ColumnContainer style={{ flex: 3 }}>
             <FormGroup

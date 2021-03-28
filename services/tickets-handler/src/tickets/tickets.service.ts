@@ -57,16 +57,14 @@ export class TicketsService {
   }
 
   async remove(id: string) {
-    // try {
-    const result = await this.ticketModel.deleteOne({ _id: id });
-
-    // if (result.deletedCount === 0) {
-    //   throw new NotFoundException(`Ticket not found`);
-    // }
-
-    return result;
-    // } catch (error) {
-    //   throw new BadRequestException('Invalid parameters');
-    // }
+    try {
+      const result = await this.ticketModel.deleteOne({ _id: id });
+      if (result.deletedCount === 0) {
+        throw new NotFoundException(`Ticket not found`);
+      }
+      return result;
+    } catch (error) {
+      throw new BadRequestException('Invalid parameters');
+    }
   }
 }

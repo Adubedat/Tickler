@@ -6,7 +6,7 @@ import { Tooltip2 } from "@blueprintjs/popover2";
 import TicketForm from '../TicketForm';
 import { ICreateTicket } from '../TicketForm';
 
-interface TicketProps {
+export interface TicketProps {
   _id: string;
   creator_id: string;
   title: string;
@@ -20,6 +20,18 @@ interface TicketProps {
 
 interface Props {
   ticket: TicketProps;
+}
+
+const initialTicket = {
+  _id: "",
+  creator_id: "",
+  title: "",
+  description: "",
+  priority: "",
+  severity: "",
+  status: "",
+  number: 0,
+  modified: "",
 }
 
 const severityColor = (severity: string) => {
@@ -52,25 +64,7 @@ const priorityColor = (priority: string) => {
   }
 }
 
-const ListElement = ({ ticket }: Props) => {
-  return (
-    <ListElementContainer>
-      <div style={{ display: 'flex'}}>
-        <Tooltip2 content={ticket.severity} minimal placement="top">
-          <TicketAttribute><Tag round style={{backgroundColor: severityColor(ticket.severity)}} /></TicketAttribute>
-        </Tooltip2>
-        <Tooltip2 content={ticket.priority} minimal placement="top">
-          <TicketAttribute><Tag round style={{backgroundColor: priorityColor(ticket.priority)}} /></TicketAttribute>
-        </Tooltip2>
-        <TicketAttribute><span style={{color: '#008aa8'}}>#{ticket.number}</span>&nbsp;{ticket.title}</TicketAttribute >
-      </div>
-      <div style={{ display: 'flex'}}>
-        <TicketAttribute>{ticket.status}</TicketAttribute >
-        <TicketAttribute>{ticket.modified}</TicketAttribute >
-      </div>
-    </ListElementContainer>
-  );
-};
+
 
 const backdropStyle = {
   style: {
@@ -80,11 +74,13 @@ const backdropStyle = {
 
 const TicketsList = () => {
   const [openOverlay, setOpenOverlay] = useState(false);
+  const [formType, setFormType] = useState('Create');
   const [tickets, setTickets] = useState<TicketProps[]>([]);
-  const jwt = localStorage.getItem('jwt');
-
+  const [ticket, setTicket] = useState(initialTicket);
+  
   useEffect(() => {
     const fetchUsers = async () => {
+      const jwt = localStorage.getItem('jwt');
       const requestOptions = {
         method: 'GET',
         headers: {
@@ -105,7 +101,7 @@ const TicketsList = () => {
       }
     };
   fetchUsers();
-  })
+  }, [openOverlay])
 
   const createTicket = async (ticket: ICreateTicket) => {
     const jwt = localStorage.getItem('jwt');
@@ -129,6 +125,44 @@ const TicketsList = () => {
     }
   }
 
+  const updateTicket = async (ticket: ICreateTicket) => {
+    const jwt = localStorage.getItem('jwt');
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(ticket)
+    }
+    try {
+      let response = await fetch(`${TICKETS_SERVICE_URL}/tickets/${ticket.id}`, requestOptions);
+      let data = await response.json();
+      if (response.status >= 400) {
+        console.error(data.message);
+      }
+      toggleOverlay();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const openCreateOverlay = () => {
+    setTicket(initialTicket);
+    setFormType('Create');
+    setOpenOverlay(!openOverlay);
+  }
+  
+  const openUpdateOverlay = (ticket: TicketProps) => {
+    setTicket(ticket);
+    setFormType('Update');
+    setOpenOverlay(!openOverlay);
+  }
+  
+  const toggleOverlay = () => {
+    setOpenOverlay(!openOverlay);
+  }
+
   const displayTickets = () => {
     return (tickets.map((ticket) => {
       ticket.modified = ticket.modified.split('T')[0].replace('-', ' ');
@@ -136,9 +170,25 @@ const TicketsList = () => {
     }));
   }
 
-  const toggleOverlay = () => {
-    setOpenOverlay(!openOverlay);
-  }
+  const ListElement = ({ ticket }: Props) => {
+    return (
+      <ListElementContainer onClick={() => openUpdateOverlay(ticket)}>
+        <div style={{ display: 'flex'}}>
+          <Tooltip2 content={ticket.severity} minimal placement="top">
+            <TicketAttribute><Tag round style={{backgroundColor: severityColor(ticket.severity)}} /></TicketAttribute>
+          </Tooltip2>
+          <Tooltip2 content={ticket.priority} minimal placement="top">
+            <TicketAttribute><Tag round style={{backgroundColor: priorityColor(ticket.priority)}} /></TicketAttribute>
+          </Tooltip2>
+          <TicketAttribute><span style={{color: '#008aa8'}}>#{ticket.number}</span>&nbsp;{ticket.title}</TicketAttribute >
+        </div>
+        <div style={{ display: 'flex'}}>
+          <TicketAttribute>{ticket.status}</TicketAttribute >
+          <TicketAttribute>{ticket.modified}</TicketAttribute >
+        </div>
+      </ListElementContainer>
+    );
+  };
 
   return (
     <TicketsContainer>
@@ -147,12 +197,12 @@ const TicketsList = () => {
         onClose={toggleOverlay}
         backdropProps={backdropStyle}
       >
-        <TicketForm toggleOverlay={toggleOverlay} type={'create'} createTicket={createTicket} />
+        <TicketForm toggleOverlay={toggleOverlay} type={formType} createTicket={createTicket} updateTicket={updateTicket} ticket={ticket}/>
       </Overlay>
       <RowContainer >
         <TicketTitle>Tickets</TicketTitle>
         <Button
-          onClick={toggleOverlay}
+          onClick={openCreateOverlay}
           icon="plus"
           large
           style={{backgroundColor: '#83eede', backgroundImage: 'none' }}

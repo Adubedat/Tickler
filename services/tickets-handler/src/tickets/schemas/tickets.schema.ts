@@ -45,3 +45,8 @@ export class Ticket extends Document {
 }
 
 export const TicketsSchema = SchemaFactory.createForClass(Ticket);
+
+TicketsSchema.pre('save', function (next) {
+  this.modified = new Date(Date.now());
+  next();
+});
