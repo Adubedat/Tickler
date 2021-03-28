@@ -26,11 +26,9 @@ export class AuthController {
   }
 
   @MessagePattern({ role: 'auth', cmd: 'check' })
-  async loggedIn(data) {
+  async loggedIn(data: { jwt: string }) {
     try {
-      const res = this.authService.validateToken(data.jwt);
-
-      return res;
+      return this.authService.validateToken(data.jwt);
     } catch (e) {
       throw new UnauthorizedException();
     }

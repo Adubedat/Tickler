@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
-// import { UpdateTicketDto } from './dto/update-ticket.dto';
-import { AuthGuard } from './guards/auth.guards';
+import { UpdateTicketDto } from './dto/update-ticket.dto';
+import { isAdminOrCreatorGuard } from './guards/isAdminOrCreator.guard';
 
 @Controller('tickets')
 export class TicketsController {
@@ -19,27 +19,31 @@ export class TicketsController {
 
   @Post()
   create(@Body() createTicketDto: CreateTicketDto) {
+    console.log(createTicketDto);
     return this.ticketsService.create(createTicketDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return 'Tickets for authenticated user';
+  async findAll() {
+    return await this.ticketsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ticketsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.ticketsService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateTicketDto: UpdateTicketDto) {
-  //   return this.ticketsService.update(+id, updateTicketDto);
-  // }
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateTicketDto: UpdateTicketDto,
+  ) {
+    return await this.ticketsService.update(id, updateTicketDto);
+  }
 
+  @UseGuards(isAdminOrCreatorGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ticketsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.ticketsService.remove(id);
   }
 }

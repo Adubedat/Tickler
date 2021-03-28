@@ -1,4 +1,5 @@
 interface IupdateUserData {
+  id: string;
   username: string;
   role: string;
   access_token: string;
