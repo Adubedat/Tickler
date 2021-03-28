@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { TicketsContainer, TicketTitle, RowContainer, ListElementContainer, ListElementHeader, TicketAttribute } from './styles';
+import { TicketsContainer, TicketTitle, RowContainer, ListElementContainer, ListElementHeader, TicketAttribute, TicketAttributeStyle } from './styles';
 import { TICKETS_SERVICE_URL } from '../../constants';
-import { Button, Overlay } from "@blueprintjs/core";
+import { Button, Overlay, Tag } from "@blueprintjs/core";
+import { Tooltip2 } from "@blueprintjs/popover2";
 import TicketForm from '../TicketForm';
 
 interface TicketProps {
@@ -20,13 +21,47 @@ interface Props {
   ticket: TicketProps;
 }
 
+const severityColor = (severity: string) => {
+  switch (severity) {
+    case "Wishlist":
+      return '#70728f';
+    case "Minor":
+      return '#40a8e4';
+    case "Normal":
+      return '#40e47c';
+    case "Important":
+      return '#e4a240';
+    case "Critical":
+      return '#d35450';
+    default:
+      return '#40e47c';
+  }
+}
+
+const priorityColor = (priority: string) => {
+  switch (priority) {
+    case "Low":
+      return '#a8e440';
+    case "Normal":
+      return '#e4ce40';
+    case "High":
+      return '#e47c40';
+    default:
+      return '#e4ce40';
+  }
+}
+
 const ListElement = ({ ticket }: Props) => {
   return (
     <ListElementContainer>
       <div style={{ display: 'flex'}}>
-        <TicketAttribute>{ticket.severity}</TicketAttribute >
-        <TicketAttribute>{ticket.priority}</TicketAttribute >
-        <TicketAttribute>{`#${ticket.number} ${ticket.title}`}</TicketAttribute >
+        <Tooltip2 content={ticket.severity} minimal placement="top">
+          <TicketAttribute><Tag round style={{backgroundColor: severityColor(ticket.severity)}} /></TicketAttribute>
+        </Tooltip2>
+        <Tooltip2 content={ticket.priority} minimal placement="top">
+          <TicketAttribute><Tag round style={{backgroundColor: priorityColor(ticket.priority)}} /></TicketAttribute>
+        </Tooltip2>
+        <TicketAttribute><span style={{color: '#008aa8'}}>#{ticket.number}</span>&nbsp;{ticket.title}</TicketAttribute >
       </div>
       <div style={{ display: 'flex'}}>
         <TicketAttribute>{ticket.status}</TicketAttribute >
@@ -103,21 +138,21 @@ const TicketsList = () => {
       </RowContainer>
       <ListElementHeader>
         <div style={{ display: 'flex'}}>
-          <TicketAttribute style={{ paddingLeft: '10px'}}>
+          <TicketAttribute style={TicketAttributeStyle}>
             <Button minimal rightIcon="chevron-down" >Severity</Button >
           </TicketAttribute>
-          <TicketAttribute style={{ paddingLeft: '10px'}}>
+          <TicketAttribute style={TicketAttributeStyle}>
             <Button minimal rightIcon="chevron-down" >Priority</Button >
           </TicketAttribute>
-          <TicketAttribute style={{ paddingLeft: '10px'}}>
+          <TicketAttribute style={TicketAttributeStyle}>
             <Button minimal rightIcon="chevron-down" >Ticket</Button >
           </TicketAttribute>
         </div>
         <div style={{ display: 'flex'}}>
-          <TicketAttribute style={{ paddingLeft: '10px'}}>
+          <TicketAttribute style={TicketAttributeStyle}>
             <Button minimal rightIcon="chevron-down" >Status</Button >
           </TicketAttribute>
-          <TicketAttribute style={{ paddingLeft: '10px'}}>
+          <TicketAttribute style={TicketAttributeStyle}>
             <Button minimal rightIcon="chevron-down" >Modified</Button >
           </TicketAttribute>
         </div>

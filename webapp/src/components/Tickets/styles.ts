@@ -29,8 +29,11 @@ export const ListElementContainer = styled.div`
   align-items: center;
   flex-direction: row;
   :hover {
-    background-color: #ecf0f3;
+    background-color: #d4dde4;
   }
+  border-radius: 5px;
+  margin: 5px;
+  background-color: #ecf0f3;
 `;
 
 export const ListElementHeader = styled.div`
@@ -42,6 +45,12 @@ export const ListElementHeader = styled.div`
 `;
 
 export const TicketAttribute = styled.span`
+  display: flex;
   min-width: 120px;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 `;
+
+export const TicketAttributeStyle = {
+  paddingLeft: '10px'
+}
