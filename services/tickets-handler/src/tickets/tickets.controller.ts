@@ -18,19 +18,33 @@ export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Post()
-  create(@Body() createTicketDto: CreateTicketDto) {
-    console.log(createTicketDto);
-    return this.ticketsService.create(createTicketDto);
+  async create(@Body() createTicketDto: CreateTicketDto) {
+    const ticket = await this.ticketsService.create(createTicketDto);
+    return {
+      status: 201,
+      message: 'Ticket created',
+      data: ticket,
+    };
   }
 
   @Get()
   async findAll() {
-    return await this.ticketsService.findAll();
+    const tickets = await this.ticketsService.findAll();
+    return {
+      status: 200,
+      message: 'Tickets found',
+      data: tickets,
+    };
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.ticketsService.findOne(id);
+    const ticket = await this.ticketsService.findOne(id);
+    return {
+      status: 200,
+      message: 'Ticket found',
+      data: ticket,
+    };
   }
 
   @Patch(':id')
@@ -38,12 +52,21 @@ export class TicketsController {
     @Param('id') id: string,
     @Body() updateTicketDto: UpdateTicketDto,
   ) {
-    return await this.ticketsService.update(id, updateTicketDto);
+    const ticket = await this.ticketsService.update(id, updateTicketDto);
+    return {
+      status: 200,
+      message: 'Ticket updated',
+      data: ticket,
+    };
   }
 
   @UseGuards(isAdminOrCreatorGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.ticketsService.remove(id);
+    await this.ticketsService.remove(id);
+    return {
+      status: 200,
+      message: 'Ticket deleted',
+    };
   }
 }

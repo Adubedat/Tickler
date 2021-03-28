@@ -51,7 +51,11 @@ const TicketsList = () => {
       try {
         let response = await fetch(`${TICKETS_SERVICE_URL}/tickets`, requestOptions);
         let data = await response.json();
-        setTickets(data);
+        if (response.status >= 400) {
+          console.error(data.message);
+          return;
+        }
+        setTickets(data.data);
       } catch (error) {
         console.error(error);
       }
