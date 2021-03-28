@@ -27,9 +27,9 @@ const initialTicket = {
   creator_id: "",
   title: "",
   description: "",
-  priority: "",
-  severity: "",
-  status: "",
+  priority: "Normal",
+  severity: "Normal",
+  status: "Open",
   number: 0,
   modified: "",
 }
