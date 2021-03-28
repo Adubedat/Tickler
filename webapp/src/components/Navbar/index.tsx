@@ -8,20 +8,19 @@ import {
   NavbarHeading,
   Button
 } from "@blueprintjs/core";
-import { useUserDispatch, useUserState } from '../../context/User';
+import { useUserDispatch } from '../../context/User';
 import { disconnectUser } from '../../context/User/actions';
 
 const MyNavbar = () => {
   const dispatch = useUserDispatch();
-  const user = useUserState();
-  console.log(user);
+  
   const handleLogout = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     disconnectUser(dispatch);
   }
 
   return (
-      <Navbar className={Classes.DARK} style={{top: 0}}>
+      <Navbar className={Classes.DARK} style={{ top: 0 }}>
         <NavbarGroup align={Alignment.LEFT}>
           <NavbarHeading>Tickler</NavbarHeading>
         </NavbarGroup>

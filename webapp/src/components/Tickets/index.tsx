@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TicketsContainer, TicketTitle, RowContainer, ListElementContainer, ListElementHeader } from './styles';
-import { Button } from "@blueprintjs/core";
+import { Button, Overlay } from "@blueprintjs/core";
+import TicketForm from '../TicketForm';
 
 const ListElement = () => {
   return (
@@ -18,12 +19,37 @@ const ListElement = () => {
   );
 };
 
+const backdropStyle = {
+  style: {
+    backgroundColor: '#fffffff0',
+  }
+}
+
 const TicketsList = () => {
+  const [openOverlay, setOpenOverlay] = useState(false);
+
+  const toggleOverlay = () => {
+    setOpenOverlay(!openOverlay);
+  }
+
   return (
     <TicketsContainer>
+      <Overlay
+        isOpen={openOverlay}
+        onClose={toggleOverlay}
+        backdropProps={backdropStyle}
+      >
+        <TicketForm toggleOverlay={toggleOverlay} type={'create'} />
+      </Overlay>
       <RowContainer >
         <TicketTitle>Tickets</TicketTitle>
-        <Button icon="plus" large style={{backgroundColor: '#83eede', backgroundImage: 'none' }}>New ticket</Button>
+        <Button
+          onClick={toggleOverlay}
+          icon="plus"
+          large
+          style={{backgroundColor: '#83eede', backgroundImage: 'none' }}
+          text="New ticket"
+        />
       </RowContainer>
       <ListElementHeader>
       <div>
