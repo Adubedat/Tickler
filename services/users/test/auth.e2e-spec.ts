@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import * as mongoose from 'mongoose';
-import { validUser } from './mocks/ValidUser';
+import { validUser } from './mocks/ValidUser.mock';
 
 describe('Auth service', () => {
   let app: INestApplication;
@@ -13,7 +13,6 @@ describe('Auth service', () => {
       `mongodb://${process.env.USERS_SERVICE_HOST}-db:27017/${process.env.MONGO_DATABASE}`,
       { useNewUrlParser: true },
     );
-    console.log('AUTH');
     await mongoose.connection.dropDatabase();
   });
 

@@ -57,7 +57,6 @@ export const Register = ({ history }: {history: RouteComponentProps["history"]})
     try {
       const response = await fetch(`${USERS_SERVICE_URL}/users`, requestOptions);
       const json = await response.json();
-      console.log(response);
       if (response.status >= 400) {
         handleErrorMessage(json.message);
         return;

@@ -51,7 +51,6 @@ export const Login = ({ history }: {history: RouteComponentProps["history"]}) =>
     try {
       const response = await fetch(`${USERS_SERVICE_URL}/auth`, requestOptions);
       const json = await response.json();
-      console.log(response);
       if (response.status >= 400) {
         setError(true);
         return;

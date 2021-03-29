@@ -26,13 +26,7 @@ export class TicketsService {
 
   async findOne(id: string) {
     try {
-      const existingTicket = await this.ticketModel.findOne({ _id: id });
-
-      if (!existingTicket) {
-        throw new NotFoundException(`Ticket not found`);
-      }
-
-      return existingTicket;
+      return await this.ticketModel.findOne({ _id: id });
     } catch (error) {
       throw new BadRequestException('Invalid parameters');
     }
@@ -45,11 +39,6 @@ export class TicketsService {
         updateTicketDto,
         { new: true },
       );
-
-      if (!existingTicket) {
-        throw new NotFoundException(`Ticket not found`);
-      }
-
       return existingTicket;
     } catch (error) {
       throw new BadRequestException('Invalid parameters');

@@ -41,6 +41,7 @@ services:
       - .env
     depends_on:
       - tickets-handler-db
+      - users
     ports:
       - "${TICKETS_HANDLER_SERVICE_PORT}:${TICKETS_HANDLER_SERVICE_PORT}"
     volumes:
