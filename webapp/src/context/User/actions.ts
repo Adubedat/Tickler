@@ -13,8 +13,8 @@ export const updateUser = (dispatch: React.Dispatch<any>, data: IupdateUserData)
 }
 
 export const disconnectUser = (dispatch: React.Dispatch<any>) => {
-  dispatch({ type: 'LOGOUT' });
   localStorage.removeItem('jwt');
+  dispatch({ type: 'LOGOUT' });
 }
 
 export const checkUserAuth = async (dispatch: React.Dispatch<any>) => {
@@ -32,8 +32,10 @@ export const checkUserAuth = async (dispatch: React.Dispatch<any>) => {
     let data = await response.json();
     if (response.status === 200) {
       dispatch({ type: 'AUTH_SUCCESS', payload: data.data });
+      return;
     }
+    disconnectUser(dispatch);
   } catch (error) {
-    dispatch({ type: 'LOGOUT' });
+    disconnectUser(dispatch);
   }
 }

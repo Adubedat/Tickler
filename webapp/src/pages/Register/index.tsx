@@ -11,7 +11,7 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/popover2/lib/css/blueprint-popover2.css';
 
 
-const Register: React.FunctionComponent<RouteComponentProps> = ({ history }) => {
+export const Register = ({ history }: {history: RouteComponentProps["history"]}) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);

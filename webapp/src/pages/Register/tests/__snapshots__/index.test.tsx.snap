@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Register /> renders 1`] = `
+<div
+  className="sc-dlfnbm jwvYWE"
+>
+  <styled.div>
+    <styled.div>
+      <ForwardRef(SvgLogo) />
+    </styled.div>
+    <styled.p>
+      Tickler
+    </styled.p>
+    <styled.p>
+      Debugging has never been so fun
+    </styled.p>
+    <styled.div>
+      <form>
+        <styled.p
+          style={
+            Object {
+              "color": "#182026",
+            }
+          }
+        >
+          Register
+        </styled.p>
+        <Blueprint3.FormGroup
+          helperText={null}
+          intent="none"
+          label="Username"
+          labelFor="username-input"
+          labelInfo="(required)"
+        >
+          <Blueprint3.InputGroup
+            id="username-input"
+            intent="none"
+            large={true}
+            onChange={[Function]}
+            placeholder="Enter your username..."
+            value=""
+          />
+        </Blueprint3.FormGroup>
+        <Blueprint3.FormGroup
+          helperText={null}
+          intent="none"
+          label="Password"
+          labelFor="password-input"
+          labelInfo="(required)"
+        >
+          <Blueprint3.InputGroup
+            id="password-input"
+            intent="none"
+            large={true}
+            onChange={[Function]}
+            placeholder="Enter your password..."
+            rightElement={
+              <Blueprint3.Tooltip2
+                content="Show Password"
+                hoverCloseDelay={0}
+                hoverOpenDelay={100}
+                minimal={false}
+                transitionDuration={100}
+              >
+                <Blueprint3.Button
+                  icon="lock"
+                  intent="warning"
+                  minimal={true}
+                  onClick={[Function]}
+                />
+              </Blueprint3.Tooltip2>
+            }
+            type="password"
+            value=""
+          />
+        </Blueprint3.FormGroup>
+        <Blueprint3.Button
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "none #008aa8aa",
+              "color": "#ffffff",
+              "width": "100%",
+            }
+          }
+          type="submit"
+        >
+          Register
+        </Blueprint3.Button>
+        <p
+          style={
+            Object {
+              "textAlign": "center",
+            }
+          }
+        >
+          <br />
+          Already have an account ? 
+          <a
+            href="http://localhost:3000/"
+          >
+            Login here
+          </a>
+        </p>
+      </form>
+    </styled.div>
+  </styled.div>
+</div>
+`;

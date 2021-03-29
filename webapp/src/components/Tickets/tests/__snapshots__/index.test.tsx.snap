@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tickets /> renders 1`] = `
+<styled.div>
+  <Blueprint3.Overlay
+    autoFocus={true}
+    backdropProps={
+      Object {
+        "style": Object {
+          "backgroundColor": "#fffffff0",
+        },
+      }
+    }
+    canEscapeKeyClose={true}
+    canOutsideClickClose={true}
+    enforceFocus={true}
+    hasBackdrop={true}
+    isOpen={false}
+    lazy={true}
+    onClose={[Function]}
+    transitionDuration={300}
+    transitionName="bp3-overlay"
+    usePortal={true}
+  >
+    <TicketForm
+      createTicket={[Function]}
+      ticket={
+        Object {
+          "_id": "",
+          "creator_id": "",
+          "description": "",
+          "modified": "",
+          "number": 0,
+          "priority": "Normal",
+          "severity": "Normal",
+          "status": "Open",
+          "title": "",
+        }
+      }
+      toggleOverlay={[Function]}
+      type="Create"
+      updateTicket={[Function]}
+    />
+  </Blueprint3.Overlay>
+  <styled.div>
+    <styled.span>
+      Tickets
+    </styled.span>
+    <Blueprint3.Button
+      icon="plus"
+      large={true}
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#83eede",
+          "backgroundImage": "none",
+        }
+      }
+      text="New ticket"
+    />
+  </styled.div>
+  <styled.div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
+    >
+      <styled.span
+        style={
+          Object {
+            "paddingLeft": "10px",
+          }
+        }
+      >
+        <Blueprint3.Button
+          minimal={true}
+          rightIcon="chevron-down"
+        >
+          Severity
+        </Blueprint3.Button>
+      </styled.span>
+      <styled.span
+        style={
+          Object {
+            "paddingLeft": "10px",
+          }
+        }
+      >
+        <Blueprint3.Button
+          minimal={true}
+          rightIcon="chevron-down"
+        >
+          Priority
+        </Blueprint3.Button>
+      </styled.span>
+      <styled.span
+        style={
+          Object {
+            "paddingLeft": "10px",
+          }
+        }
+      >
+        <Blueprint3.Button
+          minimal={true}
+          rightIcon="chevron-down"
+        >
+          Ticket
+        </Blueprint3.Button>
+      </styled.span>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
+    >
+      <styled.span
+        style={
+          Object {
+            "paddingLeft": "10px",
+          }
+        }
+      >
+        <Blueprint3.Button
+          minimal={true}
+          rightIcon="chevron-down"
+        >
+          Status
+        </Blueprint3.Button>
+      </styled.span>
+      <styled.span
+        style={
+          Object {
+            "paddingLeft": "10px",
+          }
+        }
+      >
+        <Blueprint3.Button
+          minimal={true}
+          rightIcon="chevron-down"
+        >
+          Modified
+        </Blueprint3.Button>
+      </styled.span>
+    </div>
+  </styled.div>
+</styled.div>
+`;

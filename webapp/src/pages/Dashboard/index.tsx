@@ -5,7 +5,7 @@ import Navbar from '../../components/Navbar';
 import LeftMenu from '../../components/LeftMenu/index';
 import TicketsList from '../../components/Tickets';
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <MainContainer>
       <ColumnContainer>

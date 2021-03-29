@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PageNotFound /> renders 1`] = `
+<div
+  className="sc-bdfBwQ iVkvtj"
+>
+  <p>
+    404 Error Page not found
+  </p>
+</div>
+`;

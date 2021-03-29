@@ -18,7 +18,6 @@ const App = () => {
   if (jwt !== null && user.isAuth === false) {
     checkUserAuth(dispatch);
   }
-  // const isAuth = user.isAuth || (jwt !== null);
   
   return (
       <BackgroundContainer>

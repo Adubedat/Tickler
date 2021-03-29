@@ -6,7 +6,7 @@ services:
       context: "."
       dockerfile: "./webapp/Dockerfile"
     env_file:
-      - .env
+      - .env.test
     depends_on:
       - users
       - tickets-handler
@@ -20,7 +20,7 @@ services:
       context: "."
       dockerfile: "./services/users/Dockerfile"
     env_file:
-      - .env
+      - .env.test
     depends_on:
       - users-db
     ports:
@@ -38,7 +38,7 @@ services:
       context: "."
       dockerfile: "./services/tickets-handler/Dockerfile"
     env_file:
-      - .env
+      - .env.test
     depends_on:
       - tickets-handler-db
     ports:
