@@ -18,7 +18,7 @@ elif [ $# -gt 1 ]
     shift
     for var in "$@"
     do
-      if [ $1 == "test" ] || [ $1 == "coverage" ]; then
+      if [ $ENV == "test" ] || [ $ENV == "coverage" ]; then
         docker-compose -f docker-compose.test.yml run -e ENVIRONMENT="$ENV" "$var"
       else
         docker-compose run -e ENVIRONMENT="$ENV" "$var"

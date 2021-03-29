@@ -6,6 +6,7 @@ export class ConfigService {
       host: process.env.USERS_SERVICE_HOST,
       http_port: process.env.USERS_SERVICE_PORT,
       tcp_port: process.env.USERS_SERVICE_TCP_PORT,
+      jwt_secret: process.env.JWT_SECRET,
     };
   }
 

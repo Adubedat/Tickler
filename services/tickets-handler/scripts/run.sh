@@ -13,7 +13,7 @@ fi
 if [ "${ENVIRONMENT}" == "test" ]
 then
 	npm i
-  npm run test
+  npm run test:e2e
 fi
 
 if [ "${ENVIRONMENT}" == "coverage" ]
