@@ -29,7 +29,7 @@ describe('Users service', () => {
   });
 
   it('POST /users - should not create user without request body', (done) => {
-    return request('http://localhost:3010')
+    return request(app.getHttpServer())
       .post('/users/')
       .send()
       .expect(412)

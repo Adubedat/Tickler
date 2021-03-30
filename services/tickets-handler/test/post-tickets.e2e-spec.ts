@@ -14,7 +14,7 @@ describe('Tickets service', () => {
 
   beforeAll(async () => {
     await mongoose.connect(
-      `mongodb://${process.env.USERS_SERVICE_HOST}-db:27017/${process.env.MONGO_DATABASE}`,
+      `mongodb://${process.env.TICKETS_HANDLER_SERVICE_HOST}-db:27017/${process.env.MONGO_DATABASE}`,
       { useNewUrlParser: true },
     );
     await mongoose.connection.dropDatabase();
@@ -94,7 +94,6 @@ describe('Tickets service', () => {
   it('POST /tickets - should create ticket', (done) => {
     const body = validTicket;
     body.creator_id = userId;
-    console.log(body);
     return request(app.getHttpServer())
       .post('/tickets/')
       .set('Authorization', `Bearer ${jwt}`)

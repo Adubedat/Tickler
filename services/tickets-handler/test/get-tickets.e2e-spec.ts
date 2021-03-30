@@ -15,7 +15,7 @@ describe('Tickets service', () => {
 
   beforeAll(async () => {
     await mongoose.connect(
-      `mongodb://${process.env.USERS_SERVICE_HOST}-db:27017/${process.env.MONGO_DATABASE}`,
+      `mongodb://${process.env.TICKETS_HANDLER_SERVICE_HOST}-db:27017/${process.env.MONGO_DATABASE}`,
       { useNewUrlParser: true },
     );
     await mongoose.connection.dropDatabase();
