@@ -4,8 +4,8 @@
 This project is a simple tickets manager application. It provides a possibility to perform sign up users and manage user's tickets.
 
 ## Build the project
-Your first need to install `docker` and `docker-compose`
-Execute `./scripts/run.sh` from the root of the repository
+* Your first need to install `docker` and `docker-compose`
+* Execute `./scripts/run.sh` from the root of the repository
 
 ## Brief architecture overview
 This API showcase consists of a front application and two services:
