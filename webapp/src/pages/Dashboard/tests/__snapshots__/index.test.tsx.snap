@@ -5,7 +5,10 @@ exports[`<Dashboard /> renders 1`] = `
   <styled.div>
     <MyNavbar />
     <styled.div>
-      <LeftMenu />
+      <LeftMenu
+        selectedComponent="tickets"
+        setSelectedComponent={[Function]}
+      />
       <TicketsList />
     </styled.div>
   </styled.div>

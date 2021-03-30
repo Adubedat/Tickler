@@ -5,7 +5,9 @@ import LeftMenu from "../index";
 
 describe("<LeftMenu />", () => {
   test("renders", () => {
-    const wrapper = shallow(<LeftMenu />);
+    const selectedComponent = 'tickets';
+    const setSelectedComponent = jest.fn();
+    const wrapper = shallow(<LeftMenu selectedComponent={selectedComponent} setSelectedComponent={setSelectedComponent}/>);
 
     expect(toJson(wrapper)).toMatchSnapshot();
   });
