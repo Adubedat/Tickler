@@ -1,52 +1,54 @@
 version: "3"
 services:
-  api-gateway:
+
+  webapp:
     build:
       context: "."
-      dockerfile: "./api-gateway/Dockerfile"
+      dockerfile: "./webapp/Dockerfile"
+    env_file:
+      - .env
     depends_on:
-      - issue-handler
       - users
+      - tickets-handler
     ports:
-      - "7000:7000"
+      - ${WEBAPP_PORT}:${WEBAPP_PORT}
     volumes:
-      - ./api-gateway:/opt/app
-
-  issue-handler:
-    build:
-      context: "."
-      dockerfile: "./services/issue-handler/Dockerfile"
-    depends_on:
-      - issue-handler-db
-    ports:
-      - "7100:7100"
-    volumes:
-      - ./services/issue-handler:/opt/app
-
-  issue-handler-db:
-    environment:
-      - MONGO_ROOT_PASSWORD=password
-      - MONGO_DATABASE=db
-    image: mongo:latest
-    ports:
-     - "7200:27017"
+      - ./webapp:/opt/app
 
   users:
     build:
       context: "."
       dockerfile: "./services/users/Dockerfile"
+    env_file:
+      - .env
     depends_on:
       - users-db
     ports:
-      - "7101:7101"
+      - ${USERS_SERVICE_PORT}:${USERS_SERVICE_PORT}
     volumes:
       - ./services/users:/opt/app
 
   users-db:
-    environment:
-      - MONGO_ROOT_PASSWORD=password
-      - MONGO_DATABASE=db
     image: mongo:latest
     ports:
-     - "7201:27017"
+     - "3011:27017"
+
+  tickets-handler:
+    build:
+      context: "."
+      dockerfile: "./services/tickets-handler/Dockerfile"
+    env_file:
+      - .env
+    depends_on:
+      - tickets-handler-db
+      - users
+    ports:
+      - "${TICKETS_HANDLER_SERVICE_PORT}:${TICKETS_HANDLER_SERVICE_PORT}"
+    volumes:
+      - ./services/tickets-handler:/opt/app
+
+  tickets-handler-db:
+    image: mongo:latest
+    ports:
+     - "3021:27017"
       

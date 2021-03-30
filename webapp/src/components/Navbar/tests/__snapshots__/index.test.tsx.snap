@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavBar /> renders 1`] = `
+<Blueprint3.Navbar
+  className="bp3-dark"
+  style={
+    Object {
+      "top": 0,
+    }
+  }
+>
+  <Blueprint3.NavbarGroup
+    align="left"
+  >
+    <Blueprint3.NavbarHeading>
+      Tickler
+    </Blueprint3.NavbarHeading>
+  </Blueprint3.NavbarGroup>
+  <Blueprint3.NavbarGroup
+    align="right"
+  >
+    <Blueprint3.NavbarDivider />
+    <Blueprint3.Button
+      className="bp3-minimal"
+      icon="user"
+      text="Profile"
+    />
+    <Blueprint3.Button
+      className="bp3-minimal"
+      icon="log-out"
+      onClick={[Function]}
+      text=""
+    />
+  </Blueprint3.NavbarGroup>
+</Blueprint3.Navbar>
+`;

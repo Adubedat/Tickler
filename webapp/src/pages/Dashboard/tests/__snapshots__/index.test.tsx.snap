@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dashboard /> renders 1`] = `
+<styled.div>
+  <styled.div>
+    <MyNavbar />
+    <styled.div>
+      <LeftMenu />
+      <TicketsList />
+    </styled.div>
+  </styled.div>
+</styled.div>
+`;

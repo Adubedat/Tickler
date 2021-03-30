@@ -1,0 +1,54 @@
+version: "3"
+services:
+
+  webapp:
+    build:
+      context: "."
+      dockerfile: "./webapp/Dockerfile"
+    env_file:
+      - .env.test
+    depends_on:
+      - users
+      - tickets-handler
+    ports:
+      - ${WEBAPP_PORT}:${WEBAPP_PORT}
+    volumes:
+      - ./webapp:/opt/app
+
+  users:
+    build:
+      context: "."
+      dockerfile: "./services/users/Dockerfile"
+    env_file:
+      - .env.test
+    depends_on:
+      - users-db
+    ports:
+      - ${USERS_SERVICE_PORT}:${USERS_SERVICE_PORT}
+    volumes:
+      - ./services/users:/opt/app
+
+  users-db:
+    image: mongo:latest
+    ports:
+     - "3011:27017"
+
+  tickets-handler:
+    build:
+      context: "."
+      dockerfile: "./services/tickets-handler/Dockerfile"
+    env_file:
+      - .env.test
+    depends_on:
+      - tickets-handler-db
+      - users
+    ports:
+      - "${TICKETS_HANDLER_SERVICE_PORT}:${TICKETS_HANDLER_SERVICE_PORT}"
+    volumes:
+      - ./services/tickets-handler:/opt/app
+
+  tickets-handler-db:
+    image: mongo:latest
+    ports:
+     - "3021:27017"
+      

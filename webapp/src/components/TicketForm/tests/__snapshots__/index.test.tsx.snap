@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TicketsForm /> renders 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.span>
+      New ticket
+    </styled.span>
+    <styled.div
+      style={
+        Object {
+          "flex": 5,
+        }
+      }
+    >
+      <styled.div
+        style={
+          Object {
+            "flex": 3,
+          }
+        }
+      >
+        <Blueprint3.FormGroup
+          helperText=""
+          intent="danger"
+        >
+          <Blueprint3.InputGroup
+            intent="none"
+            large={true}
+            onChange={[Function]}
+            placeholder="Subject"
+            value=""
+          />
+        </Blueprint3.FormGroup>
+        <Blueprint3.TextArea
+          large={true}
+          onChange={[Function]}
+          placeholder="Please add descriptive text to help others better understand this issue"
+          style={
+            Object {
+              "height": "30vh",
+              "marginTop": "20px",
+              "resize": "none",
+            }
+          }
+          value=""
+        />
+      </styled.div>
+      <styled.div
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <Component
+          style={
+            Object {
+              "color": "#008aa8",
+              "fontSize": "1.2em",
+            }
+          }
+        >
+          Status
+          <HTMLSelect
+            onChange={[Function]}
+            options={
+              Array [
+                Object {
+                  "label": "Open",
+                  "value": "Open",
+                },
+                Object {
+                  "label": "Closed",
+                  "value": "Closed",
+                },
+              ]
+            }
+            value="Open"
+          />
+        </Component>
+        <Component
+          style={
+            Object {
+              "color": "#008aa8",
+              "fontSize": "1.2em",
+            }
+          }
+        >
+          Priority
+          <HTMLSelect
+            onChange={[Function]}
+            options={
+              Array [
+                Object {
+                  "label": "Low",
+                  "value": "Low",
+                },
+                Object {
+                  "label": "Normal",
+                  "value": "Normal",
+                },
+                Object {
+                  "label": "High",
+                  "value": "High",
+                },
+              ]
+            }
+            value="Normal"
+          />
+        </Component>
+        <Component
+          style={
+            Object {
+              "color": "#008aa8",
+              "fontSize": "1.2em",
+            }
+          }
+        >
+          Severity
+          <HTMLSelect
+            onChange={[Function]}
+            options={
+              Array [
+                Object {
+                  "label": "Wishlist",
+                  "value": "Wishlist",
+                },
+                Object {
+                  "label": "Minor",
+                  "value": "Minor",
+                },
+                Object {
+                  "label": "Normal",
+                  "value": "Normal",
+                },
+                Object {
+                  "label": "Important",
+                  "value": "Important",
+                },
+                Object {
+                  "label": "Critical",
+                  "value": "Critical",
+                },
+              ]
+            }
+            value="Normal"
+          />
+        </Component>
+      </styled.div>
+    </styled.div>
+    <styled.div
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Blueprint3.Button
+        intent="success"
+        large={true}
+        onClick={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#008aa8",
+            "backgroundImage": "none",
+            "width": "200px",
+          }
+        }
+        text="Create"
+      />
+      <Blueprint3.Button
+        intent="danger"
+        large={true}
+        onClick={[Function]}
+        style={
+          Object {
+            "width": "200px",
+          }
+        }
+        text="Cancel"
+      />
+    </styled.div>
+  </styled.div>
+</styled.div>
+`;

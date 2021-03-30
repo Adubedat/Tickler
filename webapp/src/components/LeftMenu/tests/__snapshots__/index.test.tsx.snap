@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LeftMenu /> renders 1`] = `
+<styled.div>
+  <styled.div
+    id="tickets"
+    onClick={[Function]}
+    selected="tickets"
+  >
+    <Blueprint3.Icon
+      icon="bookmark"
+      iconSize={20}
+      intent="none"
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+        }
+      }
+    />
+    <span
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "fontSize": "1.1em",
+        }
+      }
+    >
+      Tickets
+    </span>
+    <Blueprint3.Icon
+      icon="chevron-right"
+      iconSize={20}
+      intent="none"
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+        }
+      }
+    />
+  </styled.div>
+</styled.div>
+`;
